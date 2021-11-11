@@ -6,6 +6,14 @@ let maxPaginationShown = window.innerWidth < 1200 ? 5 : 10;
         loadPagination('#pagination', +data.count, 1, maxPaginationShown, 10);
     }).catch(err => console.log(err));
     requestForSelects().then(data => renderSelects(data)).catch(err => console.log(err));
+    let theme = localStorage.getItem('codex-theme');
+    if (theme === 'light') {
+        light();
+        $('#switch-theme').prop('checked', false);
+    } else {
+        dark();
+        $('#switch-theme').prop('checked', true);
+    }
 })();
 
 function requestForPage(page, perPageCount, searchStr, type) {
@@ -130,17 +138,18 @@ function loadPagination(targetElementSelector, totalRecordsAmount, currentPage, 
     }
 
     // load pagination to page
+    let theme = localStorage.getItem('codex-theme') === 'light' ? 'btn-outline-dark' : 'btn-outline-light';
     let append = `<ul class="pagination float-end">`;
     if (currentPage !== 1)
-        append += `<li class="page-item"><a class="btn-lg btn-outline-light px-2" href="javascript:void(0)" onclick="toPage(1)"><i class="bi-chevron-bar-left"></i></a></li>`;
+        append += `<li class="page-item"><a class="btn-lg ${theme} px-2" href="javascript:void(0)" onclick="toPage(1)"><i class="bi-chevron-bar-left"></i></a></li>`;
     if (currentPage > 1)
-        append += `<li class="page-item"><a class="btn-lg btn-outline-light px-2" href="javascript:void(0)" onclick="toPage(${currentPage - 1})"><i class="bi-chevron-left"></i></a></li>`;
+        append += `<li class="page-item"><a class="btn-lg ${theme} px-2" href="javascript:void(0)" onclick="toPage(${currentPage - 1})"><i class="bi-chevron-left"></i></a></li>`;
     for (let i = startPage; i <= endPage; i++)
-        append += `<li class="page-item"><a class="btn-lg btn-outline-light px-3 ${i === currentPage ? 'active' : ''}" href="javascript:void(0)" onclick="toPage(${i})">${i}</a></li>`;
+        append += `<li class="page-item"><a class="btn-lg ${theme} px-3 ${i === currentPage ? 'active' : ''}" href="javascript:void(0)" onclick="toPage(${i})">${i}</a></li>`;
     if (currentPage < totalPage)
-        append += `<li class="page-item"><a class="btn-lg btn-outline-light px-2" href="javascript:void(0)" onclick="toPage(${currentPage + 1})"><i class="bi-chevron-right"></i></a></li>`;
+        append += `<li class="page-item"><a class="btn-lg ${theme} px-2" href="javascript:void(0)" onclick="toPage(${currentPage + 1})"><i class="bi-chevron-right"></i></a></li>`;
     if (currentPage !== totalPage)
-        append += `<li class="page-item"><a class="btn-lg btn-outline-light px-2" href="javascript:void(0)" onclick="toPage(${totalPage})"><i class="bi-chevron-bar-right"></i></a></li></ul>`;
+        append += `<li class="page-item"><a class="btn-lg ${theme} px-2" href="javascript:void(0)" onclick="toPage(${totalPage})"><i class="bi-chevron-bar-right"></i></a></li></ul>`;
     target.html(append);
 }
 
@@ -209,4 +218,37 @@ function toPage(page) {
         renderTable(data.body);
         loadPagination('#pagination', +data.count, page, maxPaginationShown, count);
     }).catch(err => console.log(err));
+}
+
+$('#switch-theme').on('change', function () {
+    let value = $(this).prop('checked');
+    if (value) { // to dark theme
+        dark();
+        localStorage.setItem('codex-theme', 'dark');
+    } else { // to light theme
+        light();
+        localStorage.setItem('codex-theme', 'light');
+    }
+});
+
+function light() {
+    let table = document.querySelector('table'), body = document.querySelector('body');
+    let paginationBtns = $('.page-item>a');
+    table.classList.remove('table-dark');
+    table.classList.add('table-light');
+    document.querySelector('#dark-css').setAttribute('href', '');
+    body.classList.remove('bg-dark');
+    body.classList.add('bg-light');
+    paginationBtns.removeClass('btn-outline-light').addClass('btn-outline-dark');
+}
+
+function dark() {
+    let table = document.querySelector('table'), body = document.querySelector('body');
+    let paginationBtns = $('.page-item>a');
+    table.classList.remove('table-light');
+    table.classList.add('table-dark');
+    document.querySelector('#dark-css').setAttribute('href', '/dark.css');
+    body.classList.remove('bg-light');
+    body.classList.add('bg-dark');
+    paginationBtns.removeClass('btn-outline-dark').addClass('btn-outline-light');
 }
