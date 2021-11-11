@@ -39,6 +39,8 @@ function renderTable(data) {
     target.innerHTML = '';
     data.forEach(ele => {
         let tr = document.createElement('tr'), th = document.createElement('th');
+        tr.setAttribute('data-clipboard-text', `/item ${ele.id} 1`);
+        tr.setAttribute('title', 'click row to copy item code');
         th.setAttribute('scope', 'row');
         th.innerText = ele.id;
         tr.appendChild(th);
@@ -64,6 +66,8 @@ function renderTable(data) {
         tr.appendChild(td);
         target.appendChild(tr);
     })
+    // load clipboard
+    new ClipboardJS('tbody>tr');
 }
 
 function requestForSelects() {

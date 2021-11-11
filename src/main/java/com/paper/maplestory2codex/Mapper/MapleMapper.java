@@ -20,7 +20,6 @@ public interface MapleMapper {
     @Select("select count(1) as count from items where Type like '%${type}%' and (Id like '%${searchStr}%' or Name like '%${searchStr}%' or Feature like '%${searchStr}%')")
     int countItems(int start, int count, String searchStr, String type);
 
-    @Select("select type from items where type!='' group by type")
+    @Select("select Type from items where Type!='' group by Type order by Type")
     List<String> getTypes();
-
 }
