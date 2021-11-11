@@ -70,7 +70,7 @@ table {
     }
 
     >:not(caption)>*>* {
-        padding: unset;
+        padding: unset !important;
     }
 
     @media (max-width: 1200px) {
