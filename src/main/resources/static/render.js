@@ -47,7 +47,7 @@ function renderTable(data) {
     target.innerHTML = '';
     data.forEach(ele => {
         let tr = document.createElement('tr'), th = document.createElement('th');
-        tr.setAttribute('data-clipboard-text', `/item ${ele.id} 1`);
+        tr.setAttribute('data-clipboard-text', `/item ${ele.id} 1 `);
         tr.setAttribute('title', 'click row to copy item code');
         th.setAttribute('scope', 'row');
         th.innerText = ele.id;
@@ -58,7 +58,7 @@ function renderTable(data) {
         tr.appendChild(td);
 
         td = td.cloneNode(false);
-        td.innerHTML = `<img src="/icon/${ele.id}" class="scaleItem" alt="None"/>`
+        td.innerHTML = `<img src="/icon/${ele.id}" class="scaleItem" alt="No Preview"/>`
         tr.appendChild(td);
 
         td = td.cloneNode(false);

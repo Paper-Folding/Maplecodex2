@@ -14,10 +14,10 @@ public interface MapleMapper {
     @Select("select Icon from items where Id=${id}")
     String getIconPath(String id);
 
-    @Select("select * from items where Type like '%${type}%' and (Id like '%${searchStr}%' or Name like '%${searchStr}%' or Feature like '%${searchStr}%') limit ${start},${count}")
+    @Select("select * from items where Type like concat('%',#{type},'%') and (Id like concat('%',#{searchStr},'%') or Name like concat('%',#{searchStr},'%') or Feature like concat('%',#{searchStr},'%')) limit ${start},${count}")
     List<Item> getItems(int start, int count, String searchStr, String type);
 
-    @Select("select count(1) as count from items where Type like '%${type}%' and (Id like '%${searchStr}%' or Name like '%${searchStr}%' or Feature like '%${searchStr}%')")
+    @Select("select count(1) as count from items where Type like concat('%',#{type},'%') and (Id like concat('%',#{searchStr},'%') or Name like concat('%',#{searchStr},'%') or Feature like concat('%',#{searchStr},'%'))")
     int countItems(int start, int count, String searchStr, String type);
 
     @Select("select Type from items where Type!='' group by Type order by Type")

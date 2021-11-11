@@ -13,12 +13,17 @@ table {
 }
 
 table img {
-    max-width: 50px;
+    width: 50px;
+    max-width: 125px;
     max-height: 50px;
 }
 
 td, th {
     vertical-align: middle;
+}
+
+.table>:not(caption)>*>* {
+    padding: unset;
 }
 
 img.scaleItem {
