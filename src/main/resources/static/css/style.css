@@ -1,0 +1,101 @@
+* {
+  font-family: 'Consolas', sans-serif;
+  font-size: 1.01em;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+.top {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.top > div:first-of-type {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100vw;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
+}
+
+.top > div:first-of-type img {
+  width: 300px;
+  height: 105px;
+}
+
+.top > div:last-of-type {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  font-size: 1.5rem;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
+}
+
+.top > div:last-of-type .form-check {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  font-size: 1.5rem;
+  margin-bottom: 0;
+  padding: .3rem 1rem;
+  padding-left: 2.3em;
+}
+
+.top > div .form-switch .form-check-input {
+  margin-left: -1.5em;
+}
+
+table {
+  table-layout: fixed;
+  text-align: center;
+}
+
+table tr {
+  vertical-align: middle;
+}
+
+table tr img {
+  width: 50px;
+  max-width: 125px;
+  max-height: 50px;
+}
+
+table tr img.scale {
+  z-index: 10;
+  position: relative;
+  -webkit-transform: scale(1);
+          transform: scale(1);
+  -webkit-transition: -webkit-transform ease-in-out .25s;
+  transition: -webkit-transform ease-in-out .25s;
+  transition: transform ease-in-out .25s;
+  transition: transform ease-in-out .25s, -webkit-transform ease-in-out .25s;
+}
+
+table tr img.scale:hover {
+  z-index: 20;
+  -webkit-transform: scale(2.5);
+          transform: scale(2.5);
+}
+
+table > :not(caption) > * > * {
+  padding: unset;
+}
+
+@media (max-width: 1200px) {
+  table.scrollHorizontally {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+}
+/*# sourceMappingURL=style.css.map */

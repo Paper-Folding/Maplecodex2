@@ -1,0 +1,83 @@
+body {
+  background-color: var(--bs-dark);
+}
+
+.top > div:last-of-type > span {
+  color: var(--bs-light);
+}
+
+.top > div:first-of-type > span {
+  color: var(--bs-light);
+}
+
+.form-floating .form-control {
+  background-color: var(--bs-dark);
+  color: var(--bs-light);
+}
+
+.form-floating .form-control:focus {
+  color: var(--bs-light);
+}
+
+.form-floating .form-control + label {
+  color: var(--bs-light);
+}
+
+.form-floating > label {
+  color: var(--bs-light);
+}
+
+.form-floating .form-select {
+  color: var(--bs-light);
+  background-color: var(--bs-dark);
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
+}
+
+.btn-outline {
+  color: #f8f9fa;
+  border-color: #f8f9fa;
+}
+
+.btn-outline:hover {
+  color: #000;
+  background-color: #f8f9fa;
+  border-color: #f8f9fa;
+}
+
+.btn-check:focus + .btn-outline,
+.btn-outline:focus {
+  -webkit-box-shadow: 0 0 0 0.25rem rgba(248, 249, 250, 0.5);
+          box-shadow: 0 0 0 0.25rem rgba(248, 249, 250, 0.5);
+}
+
+.btn-check:checked + .btn-outline,
+.btn-check:active + .btn-outline,
+.btn-outline:active,
+.btn-outline.active,
+.btn-outline.dropdown-toggle.show {
+  color: #000;
+  background-color: #f8f9fa;
+  border-color: #f8f9fa;
+}
+
+.btn-check:checked + .btn-outline:focus,
+.btn-check:active + .btn-outline:focus,
+.btn-outline:active:focus,
+.btn-outline.active:focus,
+.btn-outline.dropdown-toggle.show:focus {
+  -webkit-box-shadow: 0 0 0 0.25rem rgba(248, 249, 250, 0.5);
+          box-shadow: 0 0 0 0.25rem rgba(248, 249, 250, 0.5);
+}
+
+.themed-table {
+  --bs-table-bg: #212529;
+  --bs-table-striped-bg: #2c3034;
+  --bs-table-striped-color: #fff;
+  --bs-table-active-bg: #373b3e;
+  --bs-table-active-color: #fff;
+  --bs-table-hover-bg: #323539;
+  --bs-table-hover-color: #fff;
+  color: #fff;
+  border-color: #373b3e;
+}
+/*# sourceMappingURL=dark.css.map */

@@ -58,7 +58,7 @@ function renderTable(data) {
         tr.appendChild(td);
 
         td = td.cloneNode(false);
-        td.innerHTML = `<img src="/icon/${ele.id}" class="scaleItem" alt="No Preview"/>`
+        td.innerHTML = `<img src="/icon/${ele.id}" class="scale" alt="No Preview"/>`
         tr.appendChild(td);
 
         td = td.cloneNode(false);
@@ -138,18 +138,17 @@ function loadPagination(targetElementSelector, totalRecordsAmount, currentPage, 
     }
 
     // load pagination to page
-    let theme = localStorage.getItem('codex-theme') === 'light' ? 'btn-outline-dark' : 'btn-outline-light';
     let append = `<ul class="pagination float-end">`;
     if (currentPage !== 1)
-        append += `<li class="page-item"><a class="btn-lg ${theme} px-2" href="javascript:void(0)" onclick="toPage(1)"><i class="bi-chevron-bar-left"></i></a></li>`;
+        append += `<li class="page-item"><a class="btn-lg btn-outline px-2" href="javascript:void(0)" onclick="toPage(1)"><i class="bi-chevron-bar-left"></i></a></li>`;
     if (currentPage > 1)
-        append += `<li class="page-item"><a class="btn-lg ${theme} px-2" href="javascript:void(0)" onclick="toPage(${currentPage - 1})"><i class="bi-chevron-left"></i></a></li>`;
+        append += `<li class="page-item"><a class="btn-lg btn-outline px-2" href="javascript:void(0)" onclick="toPage(${currentPage - 1})"><i class="bi-chevron-left"></i></a></li>`;
     for (let i = startPage; i <= endPage; i++)
-        append += `<li class="page-item"><a class="btn-lg ${theme} px-3 ${i === currentPage ? 'active' : ''}" href="javascript:void(0)" onclick="toPage(${i})">${i}</a></li>`;
+        append += `<li class="page-item"><a class="btn-lg btn-outline px-3 ${i === currentPage ? 'active' : ''}" href="javascript:void(0)" onclick="toPage(${i})">${i}</a></li>`;
     if (currentPage < totalPage)
-        append += `<li class="page-item"><a class="btn-lg ${theme} px-2" href="javascript:void(0)" onclick="toPage(${currentPage + 1})"><i class="bi-chevron-right"></i></a></li>`;
+        append += `<li class="page-item"><a class="btn-lg btn-outline px-2" href="javascript:void(0)" onclick="toPage(${currentPage + 1})"><i class="bi-chevron-right"></i></a></li>`;
     if (currentPage !== totalPage)
-        append += `<li class="page-item"><a class="btn-lg ${theme} px-2" href="javascript:void(0)" onclick="toPage(${totalPage})"><i class="bi-chevron-bar-right"></i></a></li></ul>`;
+        append += `<li class="page-item"><a class="btn-lg btn-outline px-2" href="javascript:void(0)" onclick="toPage(${totalPage})"><i class="bi-chevron-bar-right"></i></a></li></ul>`;
     target.html(append);
 }
 
@@ -232,23 +231,9 @@ $('#switch-theme').on('change', function () {
 });
 
 function light() {
-    let table = document.querySelector('table'), body = document.querySelector('body');
-    let paginationBtns = $('.page-item>a');
-    table.classList.remove('table-dark');
-    table.classList.add('table-light');
-    document.querySelector('#dark-css').setAttribute('href', '');
-    body.classList.remove('bg-dark');
-    body.classList.add('bg-light');
-    paginationBtns.removeClass('btn-outline-light').addClass('btn-outline-dark');
+    document.querySelector('#toggle-theme-target').setAttribute('href', '/css/light.css');
 }
 
 function dark() {
-    let table = document.querySelector('table'), body = document.querySelector('body');
-    let paginationBtns = $('.page-item>a');
-    table.classList.remove('table-light');
-    table.classList.add('table-dark');
-    document.querySelector('#dark-css').setAttribute('href', '/dark.css');
-    body.classList.remove('bg-light');
-    body.classList.add('bg-dark');
-    paginationBtns.removeClass('btn-outline-dark').addClass('btn-outline-light');
+    document.querySelector('#toggle-theme-target').setAttribute('href', '/css/dark.css');
 }

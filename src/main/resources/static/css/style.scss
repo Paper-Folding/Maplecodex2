@@ -1,0 +1,85 @@
+* {
+    font-family: 'Consolas', sans-serif;
+    font-size: 1.01em;
+}
+
+body {
+    overflow-x: hidden;
+}
+
+.top {
+    display: flex;
+    justify-content: space-between;
+
+    >div {
+        &:first-of-type {
+            display: flex;
+            width: 100vw;
+            align-items: flex-end;
+
+            img {
+                width: 300px;
+                height: 105px;
+            }
+        }
+
+        &:last-of-type {
+            display: flex;
+            font-size: 1.5rem;
+            align-items: flex-end;
+
+            .form-check {
+                display: flex;
+                font-size: 1.5rem;
+                margin-bottom: 0;
+                padding: .3rem 1rem;
+                padding-left: 2.3em;
+            }
+        }
+
+        .form-switch .form-check-input {
+            margin-left: -1.5em;
+        }
+    }
+}
+
+table {
+    table-layout: fixed;
+    text-align: center;
+
+    tr {
+        vertical-align: middle;
+
+        img {
+            width: 50px;
+            max-width: 125px;
+            max-height: 50px;
+
+            &.scale {
+                z-index: 10;
+                position: relative;
+                transform: scale(1);
+                transition: transform ease-in-out .25s;
+
+                &:hover {
+                    z-index: 20;
+                    transform: scale(2.5);
+                }
+            }
+        }
+    }
+
+    >:not(caption)>*>* {
+        padding: unset;
+    }
+
+    @media (max-width: 1200px) {
+
+        // make the table horizontally scrollable
+        &.scrollHorizontally {
+            display: block;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+    }
+}
