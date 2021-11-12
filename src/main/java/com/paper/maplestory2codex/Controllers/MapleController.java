@@ -34,31 +34,36 @@ public class MapleController {
     @GetMapping("/icon/{id}")
     public ResponseEntity<Resource> getIcon(@PathVariable String id) {
         Resource resource = storageService.loadFileAsResource(mapleMapper.getIconPath(id));
-        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
-                "attachment; filename=\"" + id + ".png\"").body(resource);
+        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + id + ".png\"")
+                .body(resource);
     }
 
     /**
-     * @param recv pass an Json object like this:
-     *             {
-     *             "page": "Number", // which page is rendering
-     *             "count": "Number", // how many records should be returned at maximum
-     *             "str": "String", // search string
-     *             "type": "String" // items' type
-     *             }
+     * @param recv pass an Json object like this: { "page": "Number", // which page
+     *             is rendering "count": "Number", // how many records should be
+     *             returned at maximum "str": "String", // search string "type":
+     *             "String" // items' type }
      * @return AjaxResult as Json object
-     * @warning All fields must be passed, if nothing was provided, pass empty string(''), this api does not provide null check!
+     * @warning All fields must be passed, if nothing was provided, pass empty
+     *          string(''), this api does not provide null check!
      */
     @PostMapping("/getItems")
     public String getItems(@RequestBody Map<String, Object> recv) {
-        int page = Integer.parseInt(recv.get("page").toString()), count = Integer.parseInt(recv.get("count").toString());
-        String searchStr = recv.get("str").toString(), type = recv.get("type").toString();
-        return new AjaxResult(mapleMapper.countItems((page - 1) * count, count, searchStr, type),
-                mapleMapper.getItems((page - 1) * count, count, searchStr, type)).toString();
+        int page = Integer.parseInt(recv.get("page").toString()),
+                count = Integer.parseInt(recv.get("count").toString());
+        String searchStr = recv.get("str").toString(), type = recv.get("type").toString(),
+                fav = recv.get("fav").toString();
+        return new AjaxResult(mapleMapper.countItems((page - 1) * count, count, searchStr, type, fav),
+                mapleMapper.getItems((page - 1) * count, count, searchStr, type, fav)).toString();
     }
 
     @GetMapping("/getTypes")
     public String getTypes() {
         return JSON.toJSONString(mapleMapper.getTypes());
+    }
+
+    @PostMapping("/toggleFavorite")
+    public String toggleFavorite(@RequestBody String id) {
+        return mapleMapper.toggleFavoriteForSingleItem(id) == 1 ? "success" : "failed";
     }
 }

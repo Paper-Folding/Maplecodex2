@@ -3,11 +3,13 @@ package com.paper.maplestory2codex.Entity;
 public class Item {
     private long Id;
     private String Name, Type, Feature, Locale, Icon, Slot;
+    private char Favourited;
 
     public Item() {
     }
 
-    public Item(long id, String name, String type, String feature, String locale, String icon, String slot) {
+    public Item(long id, String name, String type, String feature, String locale, String icon, String slot,
+            char favourited) {
         Id = id;
         Name = name;
         Type = type;
@@ -15,6 +17,7 @@ public class Item {
         Locale = locale;
         Icon = icon;
         Slot = slot;
+        Favourited = favourited;
     }
 
     public long getId() {
@@ -71,5 +74,13 @@ public class Item {
 
     public void setSlot(String slot) {
         Slot = slot;
+    }
+
+    public char getFavourited() {
+        return Favourited;
+    }
+
+    public void setFavourited(char favourited) {
+        Favourited = favourited;
     }
 }
