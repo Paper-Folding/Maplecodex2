@@ -45,42 +45,50 @@ function requestForPage(formObj) {
 function renderTable(data) {
     let target = document.querySelector('tbody');
     target.innerHTML = '';
-    data.forEach(ele => {
-        let tr = document.createElement('tr'), th = document.createElement('th');
-        tr.setAttribute('data-clipboard-text', `/item ${ele.id} 1 `);
-        tr.setAttribute('title', 'click row to copy item code');
-        th.setAttribute('scope', 'row');
-        th.innerText = ele.id;
-        tr.appendChild(th);
-
-        let td = document.createElement('td');
-        td.innerText = ele.name;
-        tr.appendChild(td);
-
-        td = td.cloneNode(false);
-        td.innerHTML = `<img src="/icon/${ele.id}" class="scale" alt="No Preview"/>`
-        tr.appendChild(td);
-
-        td = td.cloneNode(false);
-        td.innerText = ele.type;
-        tr.appendChild(td);
-
-        td = td.cloneNode(false);
-        td.innerText = ele.feature;
-        tr.appendChild(td);
-
-        td = td.cloneNode(false);
-        td.innerText = ele.slot;
-        tr.appendChild(td);
-
-        td = td.cloneNode(false);
-        let i = document.createElement('i');
-        i.classList.add(ele.favourited === '0' ? 'si-unstar' : 'si-star', 'star' + ele.id);
-        i.onclick = toggleFavorite.bind(null, ele.id);
-        td.appendChild(i);
+    if (data.length === 0) {
+        let tr = document.createElement('tr'), td = document.createElement('td');
+        td.colSpan = '7';
+        td.innerHTML = `<h1>No Result was Found!</h1>`;
         tr.appendChild(td);
         target.appendChild(tr);
-    })
+    } else {
+        data.forEach(ele => {
+            let tr = document.createElement('tr'), th = document.createElement('th');
+            tr.setAttribute('data-clipboard-text', `/item ${ele.id} 1 `);
+            tr.setAttribute('title', 'click row to copy item code');
+            th.setAttribute('scope', 'row');
+            th.innerText = ele.id;
+            tr.appendChild(th);
+
+            let td = document.createElement('td');
+            td.innerText = ele.name;
+            tr.appendChild(td);
+
+            td = td.cloneNode(false);
+            td.innerHTML = `<img src="/icon/${ele.id}" class="scale" alt="No Preview"/>`;
+            tr.appendChild(td);
+
+            td = td.cloneNode(false);
+            td.innerText = ele.type;
+            tr.appendChild(td);
+
+            td = td.cloneNode(false);
+            td.innerText = ele.feature;
+            tr.appendChild(td);
+
+            td = td.cloneNode(false);
+            td.innerText = ele.slot;
+            tr.appendChild(td);
+
+            td = td.cloneNode(false);
+            let i = document.createElement('i');
+            i.classList.add(ele.favourited === '0' ? 'si-unstar' : 'si-star', 'star' + ele.id);
+            i.onclick = toggleFavorite.bind(null, ele.id);
+            td.appendChild(i);
+            tr.appendChild(td);
+            target.appendChild(tr);
+        })
+    }
     // load clipboard
     new ClipboardJS('tbody>tr');
 }
