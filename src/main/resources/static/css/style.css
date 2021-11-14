@@ -64,6 +64,10 @@ table tr {
   vertical-align: middle;
 }
 
+table tr i {
+  cursor: pointer;
+}
+
 table tr img {
   width: 50px;
   max-width: 125px;

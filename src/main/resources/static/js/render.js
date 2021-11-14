@@ -6,12 +6,14 @@ let maxPaginationShown = window.innerWidth < 1200 ? 5 : 10;
         "count": 10,
         "str": "",
         "type": "",
-        "fav": ""
+        "fav": "",
+        "slot": ""
     }).then(data => {
         renderTable(data.body);
         loadPagination('#pagination', +data.count, 1, maxPaginationShown, 10);
     }).catch(err => console.log(err));
-    requestForSelects().then(data => renderSelects(data)).catch(err => console.log(err));
+    requestForSelects().then(data => renderSelect('#select-type', data)).catch(err => console.log(err));
+    requestForSlots().then(data => renderSelect('#select-slot', data)).catch(err => console.log(err));
     let theme = localStorage.getItem('codex-theme');
     if (theme === 'light') {
         light();
@@ -83,7 +85,10 @@ function renderTable(data) {
             td = td.cloneNode(false);
             let i = document.createElement('i');
             i.classList.add(ele.favourited === '0' ? 'si-unstar' : 'si-star', 'star' + ele.id);
-            i.onclick = toggleFavorite.bind(null, ele.id);
+            i.addEventListener('click', function (e) {
+                toggleFavorite(ele.id);
+                e.stopPropagation();
+            });
             td.appendChild(i);
             tr.appendChild(td);
             target.appendChild(tr);
@@ -111,8 +116,26 @@ function requestForSelects() {
     });
 }
 
-function renderSelects(data) {
-    let target = document.querySelector('#select-type');
+function requestForSlots() {
+    return new Promise((resolve, reject) => {
+        $.ajax({
+            type: "get",
+            url: "/getSlots",
+            dataType: "json",
+            cache: false,
+            timeout: 10000,
+            success: data => {
+                data ? resolve(data) : reject('empty');
+            },
+            complete: (_, status) => {
+                status !== 'success' ? reject(status) : '';
+            }
+        })
+    });
+}
+
+function renderSelect(targetSelector, data) {
+    let target = document.querySelector(targetSelector);
     for (let item of data) {
         let option = document.createElement('option');
         option.innerText = option.value = item;
@@ -206,7 +229,8 @@ function getFormValues() {
         "count": $('#select-count').val(),
         "str": $('#txt-search').val().trim(),
         "type": $('#select-type').val(),
-        "fav": $('#select-fav').val()
+        "fav": $('#select-fav').val(),
+        "slot": $('#select-slot').val()
     }
 }
 
@@ -220,7 +244,7 @@ $('#txt-search').on('input', function () {
     }, 500);
 });
 
-$('#select-count,#select-fav,#select-type').on('change', function () {
+$('#select-count,#select-fav,#select-type,#select-slot').on('change', function () {
     let formObj = getFormValues();
     requestForPage(formObj).then(data => {
         renderTable(data.body);

@@ -39,10 +39,14 @@ public class MapleController {
     }
 
     /**
-     * @param recv pass an Json object like this: { "page": "Number", // which page
-     *             is rendering "count": "Number", // how many records should be
-     *             returned at maximum "str": "String", // search string "type":
-     *             "String" // items' type }
+     * @param recv pass an Json object like this:
+     * { 
+     *      "page": "Number", // which page is rendering 
+     *      "count": "Number", // how many records should be returned at maximum 
+     *      "str": "String", // search string 
+     *      "type": "String" // items' type
+     *      "slot": "String" // items' slot
+     * }
      * @return AjaxResult as Json object
      * @warning All fields must be passed, if nothing was provided, pass empty
      *          string(''), this api does not provide null check!
@@ -52,14 +56,19 @@ public class MapleController {
         int page = Integer.parseInt(recv.get("page").toString()),
                 count = Integer.parseInt(recv.get("count").toString());
         String searchStr = recv.get("str").toString(), type = recv.get("type").toString(),
-                fav = recv.get("fav").toString();
-        return new AjaxResult(mapleMapper.countItems((page - 1) * count, count, searchStr, type, fav),
-                mapleMapper.getItems((page - 1) * count, count, searchStr, type, fav)).toString();
+                slot = recv.get("slot").toString(), fav = recv.get("fav").toString();
+        return new AjaxResult(mapleMapper.countItems((page - 1) * count, count, searchStr, type, slot, fav),
+                mapleMapper.getItems((page - 1) * count, count, searchStr, type, slot, fav)).toString();
     }
 
     @GetMapping("/getTypes")
     public String getTypes() {
         return JSON.toJSONString(mapleMapper.getTypes());
+    }
+
+    @GetMapping("/getSlots")
+    public String getSlots() {
+        return JSON.toJSONString(mapleMapper.getSlots());
     }
 
     @PostMapping("/toggleFavorite")

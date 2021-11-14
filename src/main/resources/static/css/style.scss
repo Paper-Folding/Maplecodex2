@@ -50,6 +50,10 @@ table {
     tr {
         vertical-align: middle;
 
+        i {
+            cursor: pointer;
+        }
+
         img {
             width: 50px;
             max-width: 125px;
