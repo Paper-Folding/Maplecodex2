@@ -1,5 +1,5 @@
 # Maplecodex2 (Spring boot implementation)
-## Here I re-coded the website project with spring boot. To use that, you have several options to set in `/src/main/resources/application.properties`: 
+## Here I re-coded the website project with spring boot and some of new features, such as filter by type and slot, add item to favourite and so on. To use this, you have several options to set in `/src/main/resources/application.properties`: 
 ```
 server.port=80                                                            // refer to which port to launch the site
 storage.iconLocation=F:\\MapleStory2\\Maplecodex2\\Maplecodex2\\wwwroot   // refer to where icon folder is
