@@ -12,7 +12,7 @@ let maxPaginationShown = window.innerWidth < 1200 ? 5 : 10;
         renderTable(data.body);
         loadPagination('#pagination', +data.count, 1, maxPaginationShown, 10);
     }).catch(err => console.log(err));
-    requestForSelects().then(data => renderSelect('#select-type', data)).catch(err => console.log(err));
+    requestForTypes().then(data => renderSelect('#select-type', data)).catch(err => console.log(err));
     requestForSlots().then(data => renderSelect('#select-slot', data)).catch(err => console.log(err));
     let theme = localStorage.getItem('codex-theme');
     if (theme === 'light') {
@@ -98,7 +98,7 @@ function renderTable(data) {
     new ClipboardJS('tbody>tr');
 }
 
-function requestForSelects() {
+function requestForTypes() {
     return new Promise((resolve, reject) => {
         $.ajax({
             type: "get",
