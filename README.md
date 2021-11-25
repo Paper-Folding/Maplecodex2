@@ -7,4 +7,5 @@ spring.datasource.url=jdbc:mysql://192.168.0.120:3306/ms2codex            // ref
 spring.datasource.username=root                                           // refer to db user name
 spring.datasource.password=123456                                         // refer to db user password
 ```
+## Make sure you have JDK version above or equal to 11.
 ## But first you'll need to parse data with original Maplecodex2 version and import "ms2codex.sql".
