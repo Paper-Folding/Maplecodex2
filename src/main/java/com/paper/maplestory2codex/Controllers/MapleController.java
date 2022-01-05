@@ -46,6 +46,7 @@ public class MapleController {
      *      "str": "String", // search string 
      *      "type": "String" // items' type
      *      "slot": "String" // items' slot
+     *      "fav": "String" // if return favorited item, pass "1" for favorited while "0" for unfavorited, pass empty string for all
      * }
      * @return AjaxResult as Json object
      * @warning All fields must be passed, if nothing was provided, pass empty
