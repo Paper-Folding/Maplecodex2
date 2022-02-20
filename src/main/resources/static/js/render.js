@@ -84,7 +84,7 @@ function renderTable(data) {
 
             td = td.cloneNode(false);
             let i = document.createElement('i');
-            i.classList.add(ele.favourited === '0' ? 'si-unstar' : 'si-star', 'star' + ele.id);
+            i.classList.add(ele.favourited === '0' ? 'pi-star' : 'pi-star-fill', 'star' + ele.id);
             i.addEventListener('click', function (e) {
                 toggleFavorite(ele.id);
                 e.stopPropagation();
@@ -176,17 +176,17 @@ function loadPagination(targetElementSelector, totalRecordsAmount, currentPage, 
     }
 
     // load pagination to page
-    let append = `<ul class="pagination float-end">`;
+    let append = `<ul class="paper-pagination gap-2">`;
     if (currentPage !== 1)
-        append += `<li class="page-item"><a class="btn-lg btn-outline px-2" href="javascript:void(0)" onclick="toPage(1)"><i class="bi-chevron-bar-left"></i></a></li>`;
+        append += `<li class="fw-bold" onclick="toPage(1)"><i class="pi-bar-left"></i></li>`;
     if (currentPage > 1)
-        append += `<li class="page-item"><a class="btn-lg btn-outline px-2" href="javascript:void(0)" onclick="toPage(${currentPage - 1})"><i class="bi-chevron-left"></i></a></li>`;
+        append += `<li class="fw-bold" onclick="toPage(${currentPage - 1})"><i class="pi-left-arrow"></i></li>`;
     for (let i = startPage; i <= endPage; i++)
-        append += `<li class="page-item"><a class="btn-lg btn-outline px-3 ${i === currentPage ? 'active' : ''}" href="javascript:void(0)" onclick="toPage(${i})">${i}</a></li>`;
+        append += `<li class="fw-bold ${i === currentPage ? (currentPage < 100 ? 'active-two-digits' : 'active-three-or-more-digits') : ''}" onclick="toPage(${i})"><span>${i}</span></li>`;
     if (currentPage < totalPage)
-        append += `<li class="page-item"><a class="btn-lg btn-outline px-2" href="javascript:void(0)" onclick="toPage(${currentPage + 1})"><i class="bi-chevron-right"></i></a></li>`;
+        append += `<li class="fw-bold" onclick="toPage(${currentPage + 1})"><i class="pi-right-arrow"></i></li>`;
     if (currentPage !== totalPage)
-        append += `<li class="page-item"><a class="btn-lg btn-outline px-2" href="javascript:void(0)" onclick="toPage(${totalPage})"><i class="bi-chevron-bar-right"></i></a></li></ul>`;
+        append += `<li class="fw-bold" onclick="toPage(${totalPage})"><i class="pi-bar-right"></i></li></ul>`;
     target.html(append);
 }
 
@@ -284,12 +284,12 @@ function toggleFavorite(targetItemId) {
     let star = document.querySelector('.star' + targetItemId);
     star.onclick = null;
     ajaxToggleFavorite(targetItemId).then(() => {
-        if (star.classList.contains('si-unstar')) {
-            star.classList.remove('si-unstar');
-            star.classList.add('si-star');
-        } else if (star.classList.contains('si-star')) {
-            star.classList.remove('si-star');
-            star.classList.add('si-unstar');
+        if (star.classList.contains('pi-star')) {
+            star.classList.remove('pi-star');
+            star.classList.add('pi-star-fill');
+        } else if (star.classList.contains('pi-star-fill')) {
+            star.classList.remove('pi-star-fill');
+            star.classList.add('pi-star');
         }
         star.onclick = toggleFavorite.bind(null, targetItemId);
     }).catch(err => {

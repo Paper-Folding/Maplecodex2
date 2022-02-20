@@ -93,3 +93,8 @@ body {
     color: #fff;
     border-color: #373b3e;
 }
+
+ul.paper-pagination {
+    --pagination-color: var(--bs-dark);
+    --pagination-color-reverse: var(--bs-light);
+}
