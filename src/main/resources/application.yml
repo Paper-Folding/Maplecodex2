@@ -1,0 +1,18 @@
+spring:
+    thymeleaf:
+        cache: false
+    datasource:
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://127.0.0.1:3306/ms2codex
+        username: root
+        password: 123456
+        hikari:
+            minimum-idle: 3
+            maximum-pool-size: 5
+            idle-timeout: 12500
+            max-lifetime: 150000
+            validation-timeout: 15000
+server:
+    port: 80
+storage:
+    iconLocation: F:\\MapleStory2\\Maplecodex2\\Maplecodex2\\wwwroot
