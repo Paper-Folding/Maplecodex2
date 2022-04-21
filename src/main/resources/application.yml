@@ -15,4 +15,4 @@ spring:
 server:
     port: 80
 storage:
-    iconLocation: F:\\MapleStory2\\Maplecodex2\\Maplecodex2\\wwwroot
+    iconLocation: F:\\Maple Story 2 Codex\\Icons
