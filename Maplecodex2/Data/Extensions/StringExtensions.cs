@@ -1,18 +1,9 @@
-﻿/// @Author: Sparkymod
-/// **
-/// @Github: @sparkymod
-/// **
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 
 namespace Maplecodex2.Data.Extensions
 {
     public static class StringExtensions
     {
-        /// <summary>
-        /// Regex to everythin.
-        /// </summary>
-        private static readonly Regex AlphaDigitSpecialRegex = new("[a-zA-Z0-9!@#$&()\\-`.+,/\"]*");
-
         /// <summary>
         /// Regex to verify special characters.
         /// </summary>
@@ -26,7 +17,7 @@ namespace Maplecodex2.Data.Extensions
         /// <returns>true if string contains the input string; otherwise, false.</returns>
         public static bool CompareWith(this string input, string comparer)
         {
-            if (input == null || comparer == null)
+            if (input is null || comparer is null)
             {
                 return false;
             }
@@ -45,7 +36,7 @@ namespace Maplecodex2.Data.Extensions
         /// <returns>true if contains the number; otherwise, false.</returns>
         public static bool CompareWith(this int input, int comprare)
         {
-            if (input == 0 || comprare == 0)
+            if (input is 0 || comprare is 0)
             {
                 return false;
             }
@@ -53,11 +44,8 @@ namespace Maplecodex2.Data.Extensions
             {
                 return true;
             }
-            if (input.ToString().Contains(comprare.ToString()))
-            {
-                return true;
-            }
-            return false;
+
+            return input.ToString().Contains(comprare.ToString());
         }
     }
 }

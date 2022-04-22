@@ -1,56 +1,49 @@
 ﻿using Maplecodex2.Data.Extensions;
 using Maplecodex2.Data.Models;
-using Maplecodex2.Database.Core;
+using Maplecodex2.Database.Pagination;
 
 namespace Maplecodex2.Data.Services
 {
     public class ItemService
     {
-        public ICollection<Item> Items { get; set; }
         public List<Item> ResultsFromQuery { get; set; }
+        public DateTime LastAgentTime;
 
-        public ItemService()
+        public ItemService() { }
+
+        #region GET REQUESTS
+        private Task<List<Item>> GetDataItems(string search)
         {
-            using DatabaseRequest<Item> Context = new();
-            Items = Context.GetAll().Result;
-        }
+            int value = !string.IsNullOrEmpty(search) && char.IsDigit(search, 0) ? int.Parse(search) : 0;
 
-        private Task<List<Item>> GetDataItems(string searchValue)
-        {
-            int value = !string.IsNullOrEmpty(searchValue) && char.IsDigit(searchValue, 0) ? int.Parse(searchValue) : 0;
-            ResultsFromQuery = Items.ToList();
+            IEnumerable<Item> results = DataHelperService.Instance.ItemList;
 
-            if (value > 0)
+            if (string.IsNullOrEmpty(search))
             {
-                return Task.FromResult(ResultsFromQuery.FindAll(item => item.Id.CompareWith(value)));
-            }
-            else if(!string.IsNullOrEmpty(searchValue) && char.IsLetter(searchValue, 0))
-            {
-                return Task.FromResult(ResultsFromQuery.FindAll(item => item.Name.CompareWith(searchValue)));
-            }
-            else
-            {
+                ResultsFromQuery = results.ToList();
                 return Task.FromResult(ResultsFromQuery);
             }
-        }
 
-        public async Task<PagedList<Item>> GetItemAsync(bool newSearch, string search, int pageNumber, int pageSize)
+            results = from item in results
+                      where item.Info.Name.CompareWith(search)
+                      || item.Info.Type.CompareWith(search)
+                      || item.Info.Id.CompareWith(value)
+                      select item;
+            ResultsFromQuery = results.ToList();
+            return Task.FromResult(ResultsFromQuery);
+        }
+        #endregion
+
+        public async Task<PagedList<Item>> GetItemsAsync(bool newSearch, string search, int pageNumber = 1, int pageSize = 10)
         {
-            if (ResultsFromQuery == null || newSearch)
+            if (ResultsFromQuery is null || newSearch)
             {
                 ResultsFromQuery = await GetDataItems(search);
             }
             int count = ResultsFromQuery.Count;
-            IEnumerable<Item>? itemsForPage = ResultsFromQuery.Skip((pageNumber - 1) * pageSize).Take(pageSize);
+            IEnumerable<Item> agentList = ResultsFromQuery.Skip((pageNumber - 1) * pageSize).Take(pageSize);
 
-            return new PagedList<Item>(itemsForPage, count, pageNumber, pageSize);
-        }
-
-        public Task<PagedList<Item>> GetItemsDefault(int pageNumber, int pageSize)
-        {
-            int count = Items.Count;
-            IEnumerable<Item>? itemsForPage = Items.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
-            return Task.FromResult(new PagedList<Item>(itemsForPage, count, pageNumber, pageSize));
+            return new PagedList<Item>(agentList, count, pageNumber, pageSize);
         }
     }
 }
